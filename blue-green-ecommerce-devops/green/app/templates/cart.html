@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="background-color: var(--white); padding: 40px; margin-top: 20px; box-shadow: 0 1px 2px 0 rgba(0,0,0,.1); min-height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+  <i class="fas fa-shopping-basket" style="font-size: 100px; color: #e0e0e0; margin-bottom: 24px;"></i>
+  <h3 style="font-size: 18px; font-weight: 500; margin-bottom: 12px;">Your basket is empty!</h3>
+  <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">Looks like you haven't added anything to your cart yet.</p>
+  <a href="/" style="background-color: var(--primary); color: #fff; padding: 12px 60px; text-decoration: none; font-weight: 500; border-radius: 4px; box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);">Browse Products</a>
+</div>
+{% endblock %}

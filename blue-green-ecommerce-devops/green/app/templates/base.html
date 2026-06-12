@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Flipkart Minutes - Quick Grocery Delivery!{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="flipkart-header">
+    <div class="header-container">
+      <div style="display: flex; align-items: center;">
+        <a href="/" class="brand-logo">
+          Flipkart
+          <span style="font-size: 13px; font-weight: bold; font-style: normal;"><i>Minutes</i></span>
+        </a>
+      </div>
+
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-input" placeholder="Search for groceries, snacks, beverages and more in minutes">
+      </div>
+
+      <div class="header-actions">
+        <button class="btn-login" onclick="openLoginModal()" style="color: var(--primary);">Login</button>
+        <a href="#" class="header-link">Become a Seller</a>
+        <a href="#" class="header-link">More <i class="fas fa-chevron-down" style="font-size:10px;margin-left:4px;"></i></a>
+        <a href="/cart" class="header-link"><i class="fas fa-shopping-cart"></i> Cart</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Categories specific for Minutes -->
+  <nav class="category-nav">
+    <div class="category-container" style="justify-content: center; gap: 40px;">
+      <a href="#" class="category-item">
+        <img src="https://rukminim2.flixcart.com/flap/128/128/image/29327f40e9c4d26b.png?q=100" alt="Fresh Produce">
+        <span>Fresh Fruits</span>
+      </a>
+      <a href="#" class="category-item">
+        <img src="https://rukminim2.flixcart.com/flap/128/128/image/29327f40e9c4d26b.png?q=100" alt="Dairy & Bread">
+        <span>Dairy & Bread</span>
+      </a>
+      <a href="#" class="category-item">
+        <img src="https://rukminim2.flixcart.com/flap/128/128/image/29327f40e9c4d26b.png?q=100" alt="Snacks">
+        <span>Snacks & Munchies</span>
+      </a>
+      <a href="#" class="category-item">
+        <img src="https://rukminim2.flixcart.com/flap/128/128/image/29327f40e9c4d26b.png?q=100" alt="Beverages">
+        <span>Cold Drinks</span>
+      </a>
+      <a href="#" class="category-item">
+        <img src="https://rukminim2.flixcart.com/flap/128/128/image/dff3f7adcf3a90c6.png?q=100" alt="Pharmacy">
+        <span>Pharmacy</span>
+      </a>
+      <a href="#" class="category-item">
+        <img src="https://rukminim2.flixcart.com/flap/128/128/image/ab7e2b022a4587dd.jpg?q=100" alt="Cleaning">
+        <span>Cleaning Needs</span>
+      </a>
+    </div>
+  </nav>
+
+  {% if banner %}
+  <div class="minutes-banner">
+    <i class="fas fa-bolt" style="color: #ff9800;"></i> {{ banner }} <i class="fas fa-bolt" style="color: #ff9800;"></i>
+  </div>
+  {% else %}
+  <div class="minutes-banner">
+    <i class="fas fa-shipping-fast"></i> Get your essentials delivered in 10-15 minutes!
+  </div>
+  {% endif %}
+
+  <!-- Environment Badge (Dev Ops tracking) -->
+  <div style="background-color: var(--primary-dark); color: white; text-align: center; padding: 4px; font-size: 12px; font-weight: bold;">
+    Environment: {{ env }} | Version: {{ version }}
+  </div>
+
+  <div class="main-container" style="margin-top: 10px;">
+    {% block content %}{% endblock %}
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>About</h4>
+        <a href="#">Contact Us</a>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <a href="#">Payments</a>
+        <a href="#">10-Min Delivery</a>
+        <a href="#">Cancellation & Returns</a>
+      </div>
+      <div class="footer-col">
+        <h4>Policy</h4>
+        <a href="#">Return Policy</a>
+        <a href="#">Terms Of Use</a>
+        <a href="#">Security</a>
+      </div>
+      <div class="footer-col" style="border-left: 1px solid #454d5e; padding-left: 20px;">
+        <h4>Flipkart Minutes:</h4>
+        <p style="font-size: 12px; color: #fff; line-height: 1.5;">Delivering groceries, daily essentials, and more <br>at lightning speed. Available in select cities.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2007-2024 Flipkart.com (Green Environment Clone)
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="login-modal">
+      <div class="login-left">
+        <div>
+          <h2>Login</h2>
+          <p>Get access to your Orders, Wishlist and Recommendations</p>
+        </div>
+        <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+            <i class="fas fa-motorcycle" style="font-size: 80px; margin-bottom: 20px;"></i>
+            <h3>Lightning Fast Delivery!</h3>
+        </div>
+      </div>
+      <div class="login-right">
+        <i class="fas fa-times close-modal" onclick="closeLoginModal()"></i>
+        <input type="text" class="form-input" placeholder="Enter Email/Mobile number">
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">By continuing, you agree to Flipkart's Terms of Use and Privacy Policy.</p>
+        <button class="btn-submit" onclick="closeLoginModal()">Request OTP</button>
+        <div style="position: absolute; bottom: 30px; left: 0; width: 100%; text-align: center;">
+          <a href="#" style="color: var(--primary); font-size: 14px; font-weight: 500; text-decoration: none;">New to Flipkart? Create an account</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openLoginModal() {
+      document.getElementById('loginModal').style.display = 'flex';
+    }
+    function closeLoginModal() {
+      document.getElementById('loginModal').style.display = 'none';
+    }
+    // Close modal if clicked outside
+    document.getElementById('loginModal').addEventListener('click', function(e) {
+      if(e.target === this) {
+        closeLoginModal();
+      }
+    });
+  </script>
+</body>
+</html>

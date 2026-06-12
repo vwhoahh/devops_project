@@ -1,0 +1,85 @@
+# ================================================================
+#  Docker Compose – Blue-Green E-Commerce DevOps Demo
+#  Architecture: User → NGINX (port 80) → Blue App / Green App
+#  Direct Access: Blue → http://localhost:5001
+#                Green → http://localhost:5002
+#  NGINX Proxy:   http://localhost  (switches between both)
+# ================================================================
+
+services:
+
+  # ------------------------------------------------------------
+  # Blue App – Version 1 (Current Production)
+  # ------------------------------------------------------------
+  blue-app:
+    build:
+      context: ./blue/app
+      dockerfile: Dockerfile
+    container_name: blue-app
+    image: ecommerce-blue:v1
+    restart: unless-stopped
+    ports:
+      - "5001:5000"      # Phase 5: Direct access – http://localhost:5001
+    networks:
+      - ecommerce-net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # ------------------------------------------------------------
+  # Green App – Version 2 (New Release, Standby)
+  # ------------------------------------------------------------
+  green-app:
+    build:
+      context: ./green/app
+      dockerfile: Dockerfile
+    container_name: green-app
+    image: ecommerce-green:v2
+    restart: unless-stopped
+    ports:
+      - "5002:5000"      # Phase 5: Direct access – http://localhost:5002
+    networks:
+      - ecommerce-net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # ------------------------------------------------------------
+  # NGINX Load Balancer / Reverse Proxy
+  # Listen on host port 80, routes to Blue or Green backend
+  # To switch environment:
+  #   1. Edit nginx/nginx.conf (swap proxy_pass target)
+  #   2. Run: docker exec nginx-proxy nginx -s reload
+  # ------------------------------------------------------------
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    # volumes removed so nginx.conf can be overwritten by cp
+    depends_on:
+      - blue-app
+      - green-app
+    networks:
+      - ecommerce-net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+# ----------------------------------------------------------------
+# Shared Network
+# ----------------------------------------------------------------
+networks:
+  ecommerce-net:
+    driver: bridge
+    name: ecommerce-network

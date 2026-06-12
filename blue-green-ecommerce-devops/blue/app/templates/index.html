@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-banner">
+  <!-- Normally a carousel, using static image for demo -->
+  <img src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/d34ddd64070a79ec.png?q=20" alt="Hero Banner" style="width: 100%; height: 100%; object-fit: cover;">
+</div>
+
+<!-- Best of Electronics -->
+<div class="product-section">
+  <div class="section-header">
+    <h2>Best of Electronics</h2>
+    <a href="#" class="btn-view-all"><i class="fas fa-chevron-circle-right"></i> VIEW ALL</a>
+  </div>
+  <div class="product-row">
+    {% for p in products %}
+    <a href="/checkout" class="product-card">
+      <div class="product-image-container">
+        <!-- Mapping icons to placeholder images or just showing icon if preferred. Used icon. -->
+        <div class="product-icon">{{ p.icon }}</div>
+      </div>
+      <div class="product-title">{{ p.name }}</div>
+      <div class="product-price-row">
+        <span class="price-current">₹{{ "{:,}".format(p.price) }}</span>
+        <span class="price-original">₹{{ "{:,}".format((p.price * 1.2)|int) }}</span>
+        <span class="price-discount">20% off</span>
+      </div>
+      <div class="rating-badge">4.3 <i class="fas fa-star" style="font-size:10px;"></i></div>
+      <div style="margin-top: 10px; font-size: 12px; color: var(--text-muted);">Free Delivery</div>
+    </a>
+    {% endfor %}
+    
+    <!-- Hardcoded extra products to fill the row to test scroll -->
+    <a href="/checkout" class="product-card">
+      <div class="product-image-container"><div class="product-icon">📷</div></div>
+      <div class="product-title">Digital Camera</div>
+      <div class="product-price-row">
+        <span class="price-current">₹45,000</span>
+        <span class="price-original">₹50,000</span>
+        <span class="price-discount">10% off</span>
+      </div>
+      <div class="rating-badge">4.6 <i class="fas fa-star" style="font-size:10px;"></i></div>
+    </a>
+    <a href="/checkout" class="product-card">
+      <div class="product-image-container"><div class="product-icon">🖥️</div></div>
+      <div class="product-title">Curved Monitor</div>
+      <div class="product-price-row">
+        <span class="price-current">₹12,499</span>
+        <span class="price-original">₹18,000</span>
+        <span class="price-discount">30% off</span>
+      </div>
+      <div class="rating-badge">4.5 <i class="fas fa-star" style="font-size:10px;"></i></div>
+    </a>
+    <a href="/checkout" class="product-card">
+      <div class="product-image-container"><div class="product-icon">🖱️</div></div>
+      <div class="product-title">Gaming Mouse</div>
+      <div class="product-price-row">
+        <span class="price-current">₹1,200</span>
+        <span class="price-original">₹2,000</span>
+        <span class="price-discount">40% off</span>
+      </div>
+      <div class="rating-badge">4.2 <i class="fas fa-star" style="font-size:10px;"></i></div>
+    </a>
+    <a href="/checkout" class="product-card">
+      <div class="product-image-container"><div class="product-icon">⌨️</div></div>
+      <div class="product-title">Mechanical Keyboard</div>
+      <div class="product-price-row">
+        <span class="price-current">₹3,500</span>
+        <span class="price-original">₹5,000</span>
+        <span class="price-discount">30% off</span>
+      </div>
+      <div class="rating-badge">4.8 <i class="fas fa-star" style="font-size:10px;"></i></div>
+    </a>
+  </div>
+</div>
+
+<!-- Trending Deals -->
+<div class="product-section">
+  <div class="section-header">
+    <h2>Trending Deals</h2>
+    <a href="#" class="btn-view-all"><i class="fas fa-chevron-circle-right"></i> VIEW ALL</a>
+  </div>
+  <div class="product-row">
+    {% for p in products %}
+    <a href="/checkout" class="product-card">
+      <div class="product-image-container">
+        <div class="product-icon">{{ p.icon }}</div>
+      </div>
+      <div class="product-title">{{ p.name }} Limited Edition</div>
+      <div class="product-price-row">
+        <span class="price-current">₹{{ "{:,}".format(p.price) }}</span>
+        <span class="price-original">₹{{ "{:,}".format((p.price * 1.5)|int) }}</span>
+        <span class="price-discount">33% off</span>
+      </div>
+      <div class="rating-badge">4.1 <i class="fas fa-star" style="font-size:10px;"></i></div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
